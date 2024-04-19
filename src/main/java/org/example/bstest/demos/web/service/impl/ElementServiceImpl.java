@@ -17,12 +17,12 @@ public class ElementServiceImpl implements ElementService {
 
     @Override
     public List<ElementEntity> getElementList() {
-        return null;
+        return elementMapper.getElementList();
     }
 
+    @Override
     public ElementEntity getElementById(String id) {
         return elementMapper.getElementById(id);
-
     }
 
     @Override

@@ -3,7 +3,7 @@ package org.example.bstest.demos.web.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.bstest.demos.web.enums.StatusEnum;
+import org.example.bstest.demos.web.enums.ResponseStatusEnum;
 
 
 @AllArgsConstructor
@@ -12,7 +12,7 @@ import org.example.bstest.demos.web.enums.StatusEnum;
 public class RouteResponseDTO<T> {
 
     String msg;
-    StatusEnum statusEnum;
+    ResponseStatusEnum responseStatusEnum;
 
     T result;
 
@@ -21,23 +21,23 @@ public class RouteResponseDTO<T> {
         this.result = result;
     }
 
-    public RouteResponseDTO(T result, StatusEnum statusEnum) {
+    public RouteResponseDTO(T result, ResponseStatusEnum responseStatusEnum) {
         this.result = result;
-        this.statusEnum = statusEnum;
+        this.responseStatusEnum = responseStatusEnum;
     }
 
-    public RouteResponseDTO(T result, StatusEnum statusEnum, String msg) {
+    public RouteResponseDTO(T result, ResponseStatusEnum responseStatusEnum, String msg) {
         this.result = result;
-        this.statusEnum = statusEnum;
+        this.responseStatusEnum = responseStatusEnum;
         this.msg = msg;
     }
-    public RouteResponseDTO(StatusEnum statusEnum) {
-        this.statusEnum = statusEnum;
+    public RouteResponseDTO(ResponseStatusEnum responseStatusEnum) {
+        this.responseStatusEnum = responseStatusEnum;
     }
 
-    public RouteResponseDTO(StatusEnum statusEnum, String msg) {
+    public RouteResponseDTO(ResponseStatusEnum responseStatusEnum, String msg) {
         this.msg = msg;
-        this.statusEnum = statusEnum;
+        this.responseStatusEnum = responseStatusEnum;
     }
 
 }

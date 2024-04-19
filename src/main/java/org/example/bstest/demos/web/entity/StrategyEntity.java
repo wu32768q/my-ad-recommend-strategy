@@ -17,6 +17,7 @@ import java.util.*;
 @Document("strategy_collection")
 public class StrategyEntity {
 
+    @Field("element_list")
     //各组件id
     List<String> elementList;
 

@@ -13,4 +13,6 @@ public class FilterEntity extends ElementEntity {
 
     FilterTypeEnum filterTypeEnum;
 
+
+
 }

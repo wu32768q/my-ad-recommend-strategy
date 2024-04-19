@@ -27,13 +27,13 @@ public class StrategyMapper {
     }
 
     public void deleteStrategy(ObjectId id) {
-        Query query = new Query(Criteria.where("strategyId").is(id));
+        Query query = new Query(Criteria.where("strategy_id").is(id));
         mongoTemplate.remove(query, STRATEGY_COLLECTION);
     }
 
 
     public void updateStrategy(StrategyEntity strategyEntity) {
-        Query query = new Query(Criteria.where("strategyId").is(strategyEntity.getStrategyId()));
+        Query query = new Query(Criteria.where("strategy_id").is(strategyEntity.getStrategyId()));
         Update update = new Update();
         for (Map.Entry<String, Object> entry : strategyEntity.getAllNotNullFieldMap().entrySet()) {
             String fieldName = entry.getKey();
