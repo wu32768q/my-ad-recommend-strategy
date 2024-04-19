@@ -1,14 +1,17 @@
 package org.example.bstest.demos.web.service;
 
-import org.example.bstest.demos.web.StrategyDTO;
+import org.bson.types.ObjectId;
+import org.example.bstest.demos.web.DTO.RouteResponseDTO;
+import org.example.bstest.demos.web.entity.StrategyEntity;
 
 import java.util.List;
 
 public interface StrategyService {
 
-    public List<StrategyDTO> getStrategyList();
-    public Boolean addStrategy(StrategyDTO strategyDTO);
-    public Boolean deleteStrategy(Integer strategyId);
-    public Boolean updateStrategy(StrategyDTO strategyDTO);
+    public RouteResponseDTO<List<StrategyEntity>> getStrategyList();
+    public RouteResponseDTO insertStrategy(StrategyEntity strategyEntity);
+    public RouteResponseDTO deleteStrategy(String strategyId);
+    public RouteResponseDTO updateStrategy(StrategyEntity strategyEntity);
+    public RouteResponseDTO getStrategyById(String id);
 
 }

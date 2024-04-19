@@ -2,7 +2,8 @@
 
 package org.example.bstest.demos.web.controller;
 
-import org.example.bstest.demos.web.StrategyDTO;
+import org.example.bstest.demos.web.DTO.RouteResponseDTO;
+import org.example.bstest.demos.web.entity.StrategyEntity;
 import org.example.bstest.demos.web.service.StrategyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,31 +19,31 @@ public class StrategyController {
 
 
 //    增
-    @PostMapping("/Strategy")
+    @PostMapping("/strategy")
     @ResponseBody
-    public Integer addStrategy(@RequestBody StrategyDTO strategyDTO) {
-        strategyService.addStrategy(strategyDTO);
-        return 200;
+    public RouteResponseDTO addStrategy(@RequestBody StrategyEntity strategyEntity) {
+        return strategyService.insertStrategy(strategyEntity);
+
     }
 
 //    删
-    @DeleteMapping("/Strategy")
+    @DeleteMapping("/strategy")
     @ResponseBody
-    public Boolean deleteStrategy(@RequestParam Integer strategyId) {
+    public RouteResponseDTO deleteStrategy(@RequestParam String strategyId) {
         return strategyService.deleteStrategy(strategyId);
     }
 
 //    改
-    @PutMapping("/Strategy")
+    @PutMapping("/strategy")
     @ResponseBody
-    public Boolean updateStrategy(@RequestBody StrategyDTO strategyDTO) {
-        return strategyService.updateStrategy(strategyDTO);
+    public RouteResponseDTO updateStrategy(@RequestBody StrategyEntity strategyEntity) {
+        return strategyService.updateStrategy(strategyEntity);
     }
 
 //    查
-    @GetMapping("/StratrgyList")
+    @GetMapping("/stratrgyList")
     @ResponseBody
-    public List<StrategyDTO> getStrategyList() {
+    public RouteResponseDTO<List<StrategyEntity>> getStrategyList() {
         return strategyService.getStrategyList();
     }
 

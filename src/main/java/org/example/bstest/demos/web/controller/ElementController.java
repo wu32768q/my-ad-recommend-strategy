@@ -1,6 +1,6 @@
 package org.example.bstest.demos.web.controller;
 
-import org.example.bstest.demos.web.ElementDTO;
+import org.example.bstest.demos.web.entity.ElementEntity;
 import org.example.bstest.demos.web.service.ElementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,31 +15,31 @@ public class ElementController {
 
 
     //    增
-    @PostMapping("/Element")
+    @PostMapping("/element")
     @ResponseBody
-    public Integer addElement(@RequestBody ElementDTO elementDTO) {
-        elementService.addElement(elementDTO);
+    public Integer addElement(@RequestBody ElementEntity elementEntity) {
+        elementService.addElement(elementEntity);
         return 200;
     }
 
     //    删
-    @DeleteMapping("/Element")
+    @DeleteMapping("/element")
     @ResponseBody
     public Boolean deleteElement(@RequestParam Integer elementId) {
         return elementService.deleteElement(elementId);
     }
 
     //    改
-    @PutMapping("/Element")
+    @PutMapping("/element")
     @ResponseBody
-    public Boolean updateElement(@RequestBody ElementDTO elementDTO) {
-        return elementService.updateElement(elementDTO);
+    public Boolean updateElement(@RequestBody ElementEntity elementEntity) {
+        return elementService.updateElement(elementEntity);
     }
 
     //    查
-    @GetMapping("/ElementList")
+    @GetMapping("/elementList")
     @ResponseBody
-    public List<ElementDTO> getElementList() {
+    public List<ElementEntity> getElementList() {
         return elementService.getElementList();
     }
 

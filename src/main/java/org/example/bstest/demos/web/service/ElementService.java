@@ -1,14 +1,15 @@
 package org.example.bstest.demos.web.service;
 
-import org.example.bstest.demos.web.ElementDTO;
+import org.example.bstest.demos.web.entity.ElementEntity;
 
 import java.util.List;
 
 public interface ElementService {
 
-    public List<ElementDTO> getElementList();
-    public Boolean addElement(ElementDTO elementDTO);
+    public List<ElementEntity> getElementList();
+    public ElementEntity getElementById(String id);
+    public Boolean addElement(ElementEntity elementEntity);
     public Boolean deleteElement(Integer elementId);
-    public Boolean updateElement(ElementDTO elementDTO);
+    public Boolean updateElement(ElementEntity elementEntity);
 
 }

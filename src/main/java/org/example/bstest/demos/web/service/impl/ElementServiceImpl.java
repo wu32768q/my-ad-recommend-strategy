@@ -1,8 +1,10 @@
 package org.example.bstest.demos.web.service.impl;
 
 
-import org.example.bstest.demos.web.ElementDTO;
+import org.example.bstest.demos.web.entity.ElementEntity;
+import org.example.bstest.demos.web.mapper.ElementMapper;
 import org.example.bstest.demos.web.service.ElementService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,13 +12,21 @@ import java.util.List;
 @Service
 public class ElementServiceImpl implements ElementService {
 
+    @Autowired
+    ElementMapper elementMapper;
+
     @Override
-    public List<ElementDTO> getElementList() {
+    public List<ElementEntity> getElementList() {
         return null;
     }
 
+    public ElementEntity getElementById(String id) {
+        return elementMapper.getElementById(id);
+
+    }
+
     @Override
-    public Boolean addElement(ElementDTO elementDTO) {
+    public Boolean addElement(ElementEntity elementEntity) {
         return null;
     }
 
@@ -26,7 +36,7 @@ public class ElementServiceImpl implements ElementService {
     }
 
     @Override
-    public Boolean updateElement(ElementDTO elementDTO) {
+    public Boolean updateElement(ElementEntity elementEntity) {
         return null;
     }
 }
