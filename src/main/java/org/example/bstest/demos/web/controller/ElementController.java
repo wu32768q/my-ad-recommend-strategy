@@ -1,6 +1,6 @@
 package org.example.bstest.demos.web.controller;
 
-import org.example.bstest.demos.web.entity.ElementEntity;
+import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 import org.example.bstest.demos.web.service.ElementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

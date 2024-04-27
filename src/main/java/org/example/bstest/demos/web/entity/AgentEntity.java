@@ -8,14 +8,14 @@ import lombok.*;
 @Builder
 public class AgentEntity {
 
-    @NonNull
+
     String id;
 
     String name;
 
     int age;
 
-    String subject;
+    String channel;
 
     String cityCode;
 
@@ -24,6 +24,13 @@ public class AgentEntity {
     int workingYears;
 
     int level;
+//    经纪人q值
+    int qualityValue;
+
+    //被推荐次数统计
+    int recommendCount;
+
+
 
 
 

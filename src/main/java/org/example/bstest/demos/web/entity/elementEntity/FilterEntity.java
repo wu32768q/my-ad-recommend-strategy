@@ -1,6 +1,5 @@
-package org.example.bstest.demos.web.entity.element;
+package org.example.bstest.demos.web.entity.elementEntity;
 
-import org.example.bstest.demos.web.entity.ElementEntity;
 import org.example.bstest.demos.web.enums.FilterTypeEnum;
 
 public class FilterEntity extends ElementEntity {

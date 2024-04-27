@@ -1,4 +1,4 @@
-package org.example.bstest.demos.web.entity;
+package org.example.bstest.demos.web.entity.elementEntity;
 
 
 import lombok.*;
@@ -28,7 +28,7 @@ public class ElementEntity {
 
     //组件id
     @Field("element_id")
-    Integer elementId;
+    String elementId;
 
     //组件描述
     @Field("description")

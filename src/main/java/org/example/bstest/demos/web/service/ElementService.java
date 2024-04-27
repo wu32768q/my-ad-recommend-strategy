@@ -1,6 +1,6 @@
 package org.example.bstest.demos.web.service;
 
-import org.example.bstest.demos.web.entity.ElementEntity;
+import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 
 import java.util.List;
 

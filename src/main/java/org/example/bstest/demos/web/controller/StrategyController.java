@@ -3,11 +3,15 @@
 package org.example.bstest.demos.web.controller;
 
 import org.example.bstest.demos.web.DTO.RouteResponseDTO;
+import org.example.bstest.demos.web.DTO.StrategyDTO;
 import org.example.bstest.demos.web.entity.StrategyEntity;
 import org.example.bstest.demos.web.service.StrategyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,14 +20,17 @@ public class StrategyController {
 
     @Autowired
     StrategyService strategyService;
+    @Autowired
+    HttpServletRequest request;
 
 
 //    增
+    @CrossOrigin(origins = "http://localhost:9526/")
     @PostMapping("/strategy")
     @ResponseBody
     public RouteResponseDTO addStrategy(@RequestBody StrategyEntity strategyEntity) {
-        return strategyService.insertStrategy(strategyEntity);
-
+        RouteResponseDTO routeResponseDTO = strategyService.insertStrategy(strategyEntity);
+        return routeResponseDTO;
     }
 
 //    删
@@ -41,10 +48,12 @@ public class StrategyController {
     }
 
 //    查
-    @GetMapping("/stratrgyList")
+    @GetMapping("/strategy/list")
     @ResponseBody
-    public RouteResponseDTO<List<StrategyEntity>> getStrategyList() {
-        return strategyService.getStrategyList();
+    public RouteResponseDTO<List<StrategyDTO>> getStrategyList() {
+        RouteResponseDTO<List<StrategyEntity>>  dtoOfEntity2Handle =  strategyService.getStrategyList();
+        return strategyService.entity2DtoHandle(dtoOfEntity2Handle);
+
     }
 
 }

@@ -1,8 +1,8 @@
-package org.example.bstest.demos.web.mapper;
+package org.example.bstest.demos.web.mapper.mongodb;
 
 
 import org.bson.types.ObjectId;
-import org.example.bstest.demos.web.entity.ElementEntity;
+import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

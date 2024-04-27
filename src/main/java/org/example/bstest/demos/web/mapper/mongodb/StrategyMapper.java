@@ -1,4 +1,4 @@
-package org.example.bstest.demos.web.mapper;
+package org.example.bstest.demos.web.mapper.mongodb;
 
 import org.bson.types.ObjectId;
 import org.example.bstest.demos.web.entity.StrategyEntity;

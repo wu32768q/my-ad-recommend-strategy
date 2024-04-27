@@ -1,6 +1,7 @@
 package org.example.bstest.demos.web.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,6 +22,7 @@ public class StrategyEntity {
     //各组件id
     List<String> elementList;
 
+
     //策略名
     @Field("strategy_name")
     String strategyName;
@@ -31,13 +33,15 @@ public class StrategyEntity {
 
     //策略id
     @MongoId
-    @Field("strategy_id")
     ObjectId strategyId;
 
     //策略描述
     @Field("description")
+    @JsonProperty("strategyDescription")
     String description;
 
+    @Field("create_time")
+    String createTime;
 
     public Map<String, Object> getAllNotNullFieldMap() {
         java.lang.reflect.Field fields[] = this.getClass().getDeclaredFields();
@@ -55,6 +59,21 @@ public class StrategyEntity {
         }
         return map;
 
+    }
+
+
+
+
+    @Override
+    public String toString() {
+        return "StrategyEntity{" +
+                "elementList=" + elementList +
+                ", strategyName='" + strategyName + '\'' +
+                ", strategyChineseName='" + strategyChineseName + '\'' +
+                ", strategyId=" + strategyId +
+                ", description='" + description + '\'' +
+                ", createTime='" + createTime + '\'' +
+                '}';
     }
 
 

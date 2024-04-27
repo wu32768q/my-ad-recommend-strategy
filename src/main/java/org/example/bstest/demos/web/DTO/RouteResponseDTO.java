@@ -1,6 +1,7 @@
 package org.example.bstest.demos.web.DTO;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.bstest.demos.web.enums.ResponseStatusEnum;
@@ -9,11 +10,12 @@ import org.example.bstest.demos.web.enums.ResponseStatusEnum;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class RouteResponseDTO<T> {
 
-    String msg;
+    String message;
     ResponseStatusEnum responseStatusEnum;
-
+    int code =200;
     T result;
 
 
@@ -29,15 +31,23 @@ public class RouteResponseDTO<T> {
     public RouteResponseDTO(T result, ResponseStatusEnum responseStatusEnum, String msg) {
         this.result = result;
         this.responseStatusEnum = responseStatusEnum;
-        this.msg = msg;
+        this.message = msg;
     }
     public RouteResponseDTO(ResponseStatusEnum responseStatusEnum) {
         this.responseStatusEnum = responseStatusEnum;
     }
 
     public RouteResponseDTO(ResponseStatusEnum responseStatusEnum, String msg) {
-        this.msg = msg;
+        this.message = msg;
         this.responseStatusEnum = responseStatusEnum;
     }
 
+
+    public static <T> RouteResponseDTO<T> ok(T result, String msg) {
+        return new RouteResponseDTO<T>(result, ResponseStatusEnum.SUCESS);
+    }
+
+    public static <T> RouteResponseDTO<T> ok(T result) {
+        return new RouteResponseDTO<T>(result, ResponseStatusEnum.SUCESS);
+    }
 }
