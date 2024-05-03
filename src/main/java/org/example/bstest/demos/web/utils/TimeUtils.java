@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class TimeUtils {
 
-    public String getCurrentTimeWithScheme() {
+    public static String getCurrentTimeWithScheme() {
         LocalDateTime localDateTime = LocalDateTime.now(Clock.systemDefaultZone());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

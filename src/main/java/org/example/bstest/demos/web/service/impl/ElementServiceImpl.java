@@ -27,7 +27,8 @@ public class ElementServiceImpl implements ElementService {
 
     @Override
     public Boolean addElement(ElementEntity elementEntity) {
-        return null;
+        elementMapper.insertElement(elementEntity);
+        return true;
     }
 
     @Override

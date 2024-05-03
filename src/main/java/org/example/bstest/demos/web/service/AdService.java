@@ -6,6 +6,6 @@ public interface AdService {
     public String getStrategyIdByAdId(String AdId);
 
 
-    public void test();
+
 
 }

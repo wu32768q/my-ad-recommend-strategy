@@ -3,6 +3,7 @@ package org.example.bstest.demos.web.element.sort;
 import org.example.bstest.demos.web.DTO.RecommendRequestDTO;
 import org.example.bstest.demos.web.DTO.RecommendResponseDTO;
 import org.example.bstest.demos.web.entity.AgentEntity;
+import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -14,13 +15,13 @@ import java.util.stream.Collectors;
 public class RandomSort extends AbstractSort{
 
     @Override
-    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO) {
-        doSort(recommendRequestDTO, recommendResponseDTO);
+    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+        doSort(recommendRequestDTO, recommendResponseDTO,  elementEntity);
     }
 
     @Override
     public void doSort(RecommendRequestDTO recommendRequestDTO,
-                                    RecommendResponseDTO recommendResponseDTO) {
+                       RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         int expectNumber = recommendRequestDTO.getExpectNumber();
         List<AgentEntity> list2Sort = recommendResponseDTO.getAgentEntityList();
         if(list2Sort.size() < expectNumber) {

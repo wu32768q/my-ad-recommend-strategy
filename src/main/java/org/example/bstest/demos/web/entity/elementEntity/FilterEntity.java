@@ -8,7 +8,7 @@ public class FilterEntity extends ElementEntity {
     String tableName;
 
     //根据字段过滤场景，使用的表内字段
-    String formName;
+    String columnName;
 
     FilterTypeEnum filterTypeEnum;
 

@@ -30,8 +30,6 @@ public class StrategyServiceImpl implements StrategyService {
     @Autowired
     ElementService elementService;
 
-    @Autowired
-    TimeUtils timeUtils;
 
 
     @Override
@@ -40,7 +38,7 @@ public class StrategyServiceImpl implements StrategyService {
 //        if(ResponseStatusEnum.FAIL.equals(checkResponse.getResponseStatusEnum())) {
 //            return new RouteResponseDTO(ResponseStatusEnum.FAIL, checkResponse.getMessage());
 //        };
-        String currentTime = timeUtils.getCurrentTimeWithScheme();
+        String currentTime = TimeUtils.getCurrentTimeWithScheme();
         strategyEntity.setCreateTime(currentTime);
         strategyMapper.insertStrategy(strategyEntity);
         return new RouteResponseDTO<Boolean>(ResponseStatusEnum.SUCESS, "添加策略成功！");
@@ -91,7 +89,6 @@ public class StrategyServiceImpl implements StrategyService {
         }
         return new RouteResponseDTO<StrategyEntity>(strategyEntity, ResponseStatusEnum.SUCESS);
     }
-
 
 
 

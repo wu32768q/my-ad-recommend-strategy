@@ -9,9 +9,9 @@ import org.example.bstest.demos.web.element.AbstractElement;
 @Builder
 public class RecommendRequestDTO {
 
-    String AdId;
+    String adId;
 
-    String StrategyId;
+    String strategyId;
 
     int expectNumber;
 
@@ -23,5 +23,15 @@ public class RecommendRequestDTO {
     Class<? extends AbstractElementDecorator> decoratorClass;
 
 
-
+    @Override
+    public String toString() {
+        return "RecommendRequestDTO{" +
+                "adId='" + adId + '\'' +
+                ", strategyId='" + strategyId + '\'' +
+                ", expectNumber=" + expectNumber +
+                ", tableName2Recall='" + tableName2Recall + '\'' +
+                ", channel='" + channel + '\'' +
+                ", decoratorClass=" + decoratorClass +
+                '}';
+    }
 }

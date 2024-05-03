@@ -10,4 +10,6 @@ public interface AgentService {
 
     public List<AgentEntity> getAgentWholeTable(String tableName);
 
+
+
 }

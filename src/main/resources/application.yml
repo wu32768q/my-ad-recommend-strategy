@@ -2,7 +2,12 @@
 server:
   port:
     8080
-
+  tomcat:
+    mbeanregistry:
+      enabled: true
+    threads:
+      max: 200
+      min-spare: 100
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml    # mapper映射文件位置
@@ -30,4 +35,30 @@ spring:
       database: mydb
       username: root
       password: root
+
+# application.yml
+management:
+  server:
+    port:8080
+
+  endpoints:
+    enabled-by-default: true #暴露所有端点信息
+    web:
+      exposure:
+        include: "prometheus"
+#        prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      sla:
+        http:
+          server:
+            requests: 1ms,5ms,10ms,50ms,100ms,200ms,500ms,1s,5s
+      percentiles-histogram:
+        http:
+          server:
+            requests: true # 开启 http server 的请求监控
+
+
 

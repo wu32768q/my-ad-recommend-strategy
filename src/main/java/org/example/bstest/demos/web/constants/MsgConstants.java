@@ -5,7 +5,7 @@ public class MsgConstants {
 
     public static String FAIL_PREFIX = "业务执行失败，失败原因：";
 
-    public static String CURRENT_TIME_PREFIX = "当前系统时间为：";
+    public static String CURRENT_TIME_PREFIX = "当前系统时间：";
 
     public static String COMMON_SEPARATOR = "----";
 
@@ -19,7 +19,15 @@ public class MsgConstants {
 
     public static String BUILD_SUCCESS = "流量分发成功";
 
-    public static String  PREHANDLE_SUCCESS_AND_START_PROECESS = "预处理完成，开始执行责任链选人逻辑。。。";
+    public static String  PREHANDLE_SUCCESS_AND_START_PROECESS = "预处理完成，开始执行责任链选人逻辑" + COMMON_SEPARATOR;
+
+    public static String COMPONENT_PROCESS_MESSAGE_PREFIX = "开始执行组件 ： ";
+
+    public static String DECORATOR_PROCESS_MESSAGE_PREFIX = "使用的装饰器为 ： ";
+
+    public static String AGENT_LIST_NOW_PREFIX = "当前推荐结果为 ： ";
+
+    public static String RES_NUMBER_LIMIT = "执行出人限制逻辑";
 
 
 

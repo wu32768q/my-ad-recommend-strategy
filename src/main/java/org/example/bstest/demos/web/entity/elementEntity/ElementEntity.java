@@ -3,6 +3,7 @@ package org.example.bstest.demos.web.entity.elementEntity;
 
 import lombok.*;
 import org.example.bstest.demos.web.enums.ElementTypeEnum;
+import org.example.bstest.demos.web.enums.FilterTypeEnum;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -34,9 +35,27 @@ public class ElementEntity {
     @Field("description")
     String description;
 
-    @Field("element_type_enum")
     //组件类型
+    @Field("element_type_enum")
     ElementTypeEnum elementTypeEnum;
+
+
+    @Field("table_name")
+    String tableName;
+
+    //根据字段过滤场景，使用的表内字段
+    @Field("column_name")
+    String columnName;
+
+    @Field("left_rule")
+    int leftRule;
+
+    @Field("right_rule")
+    int rightRule;
+
+
+//
+//    FilterTypeEnum filterTypeEnum;
 
 
     public Map<String, Object> getAllNotNullFieldMap() {
