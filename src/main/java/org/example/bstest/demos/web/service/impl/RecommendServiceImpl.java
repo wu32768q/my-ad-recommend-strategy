@@ -19,6 +19,8 @@ import org.example.bstest.demos.web.enums.ResponseStatusEnum;
 import org.example.bstest.demos.web.mapper.mysql.Ad2StrategyMapper;
 import org.example.bstest.demos.web.mapper.mysql.AgentMaterialMapper;
 import org.example.bstest.demos.web.proxy.ApplicationContextProxy;
+import org.example.bstest.demos.web.proxy.CaffieneCacheProxy;
+import org.example.bstest.demos.web.service.AdService;
 import org.example.bstest.demos.web.service.ElementService;
 import org.example.bstest.demos.web.service.RecommendService;
 import org.example.bstest.demos.web.service.StrategyService;
@@ -51,6 +53,12 @@ public class RecommendServiceImpl implements RecommendService {
 
     @Autowired
     AgentMaterialMapper agentMaterialMapper;
+
+    @Autowired
+    AdService adService;
+
+    @Autowired
+    CaffieneCacheProxy caffieneCacheProxy;
 
 
     @Override
@@ -195,7 +203,7 @@ public class RecommendServiceImpl implements RecommendService {
         if(StringUtils.hasText(recommendRequestDTO.getStrategyId())) {
             return ;
         }
-        String strategyId = ad2StrategyMapper.getStrategyIdByAdId(recommendRequestDTO.getAdId());
+        String strategyId = caffieneCacheProxy.doGetStrategyIdProxy(recommendRequestDTO.getAdId());
         recommendRequestDTO.setStrategyId(strategyId);
     }
 

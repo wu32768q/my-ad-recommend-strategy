@@ -53,6 +53,9 @@ public class ElementEntity {
     @Field("right_rule")
     int rightRule;
 
+    @Field("expect_column_value")
+    String expectColumnValue;
+
 
 //
 //    FilterTypeEnum filterTypeEnum;

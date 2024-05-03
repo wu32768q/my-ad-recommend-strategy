@@ -30,6 +30,6 @@ public class RecommendController {
 
 
 //        return recommendService.doRecommend(recommendRequestDTO);
-        return caffieneCacheProxy.doCaffieneProxy(recommendRequestDTO);
+        return caffieneCacheProxy.doRecommendProxy(recommendRequestDTO);
     }
 }

@@ -20,7 +20,8 @@ public interface AgentMaterialMapper {
     @Select("SELECT COUNT(*)   \n" +
             "FROM INFORMATION_SCHEMA.TABLES   \n" +
             "WHERE table_schema = 'mydb'   \n" +
-            "AND table_name = ${tableName};")
+            "AND table_name = ${tableName}  \n" +
+            "limit 200;")
     public int tableNameCheck(String tableName);
 
 
