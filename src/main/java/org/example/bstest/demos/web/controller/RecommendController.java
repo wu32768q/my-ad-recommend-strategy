@@ -3,6 +3,7 @@ package org.example.bstest.demos.web.controller;
 
 import org.example.bstest.demos.web.DTO.RecommendRequestDTO;
 import org.example.bstest.demos.web.DTO.RecommendResponseDTO;
+import org.example.bstest.demos.web.proxy.CaffieneCacheProxy;
 import org.example.bstest.demos.web.service.RecommendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -14,6 +15,9 @@ public class RecommendController {
     @Autowired
     RecommendService recommendService;
 
+    @Autowired
+    CaffieneCacheProxy caffieneCacheProxy;
+
 
     @GetMapping("/recommend")
     @ResponseBody
@@ -22,6 +26,10 @@ public class RecommendController {
                                            @RequestParam @Nullable String adId,
                                            @RequestParam int expectNumber) {
 
-        return recommendService.doRecommend(tableName2Recall, strategyId, adId, expectNumber);
+        RecommendRequestDTO recommendRequestDTO = recommendService.buildInitRecommendRequest( tableName2Recall, strategyId, adId, expectNumber);
+
+
+//        return recommendService.doRecommend(recommendRequestDTO);
+        return caffieneCacheProxy.doCaffieneProxy(recommendRequestDTO);
     }
 }

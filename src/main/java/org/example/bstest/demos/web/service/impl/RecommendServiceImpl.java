@@ -54,8 +54,7 @@ public class RecommendServiceImpl implements RecommendService {
 
 
     @Override
-    public RecommendResponseDTO doRecommend(String tableName2Recall,String strategyId, String adId, int expectNumber) {
-        RecommendRequestDTO recommendRequestDTO = buildInitRecommendRequest( tableName2Recall, strategyId, adId, expectNumber);
+    public RecommendResponseDTO doRecommend(RecommendRequestDTO recommendRequestDTO) {
 
 //        构造并初始化response
         RecommendResponseDTO recommendResponseDTO = buildInitRecommeendResponse();

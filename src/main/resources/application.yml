@@ -37,8 +37,8 @@ spring:
       password: root
   cache:
     type: caffeine
-    caffeine:
-      spec: maximumSize=100,expireAfterWrite=10s
+#    caffeine:
+#      spec: maximumSize=20,expireAfterWrite=10s
 
 # application.yml
 management:

@@ -21,6 +21,8 @@ public class RecommendRequestDTO {
 
     String channel;
 
+//    int hashCode;
+
 //    使用的装饰器对象
     Class<? extends AbstractElementDecorator> decoratorClass;
 
@@ -48,5 +50,6 @@ public class RecommendRequestDTO {
     @Override
     public int hashCode() {
         return Objects.hash(adId, strategyId, expectNumber, tableName2Recall, channel, decoratorClass);
+//        return hashCode;
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface RecommendService {
 
-    public RecommendResponseDTO doRecommend(String tableName2Recall,String strategyId, String adId, int expectNumber);
+    public RecommendResponseDTO doRecommend(RecommendRequestDTO recommendRequestDTO);
 
     public void fillStrategyIdByAdId(RecommendRequestDTO recommendRequestDTO);
 

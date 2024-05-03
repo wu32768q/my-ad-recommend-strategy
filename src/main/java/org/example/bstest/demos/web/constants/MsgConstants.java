@@ -29,6 +29,8 @@ public class MsgConstants {
 
     public static String RES_NUMBER_LIMIT = "执行出人限制逻辑";
 
+    public static String BUILD_BY_CACHE = "经由缓存输出结果";
+
 
 
 }

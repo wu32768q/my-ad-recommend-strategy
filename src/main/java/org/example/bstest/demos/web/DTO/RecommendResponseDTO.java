@@ -28,5 +28,16 @@ public class RecommendResponseDTO {
 
     List<String> traceLog;
 
-
+    @Override
+    public String toString() {
+        return "RecommendResponseDTO{" +
+                "agentEntityList=" + agentEntityList +
+                ", sortedAgentEntityList=" + sortedAgentEntityList +
+                ", responseStatusEnum=" + responseStatusEnum +
+                ", code=" + code +
+                ", msg='" + msg + '\'' +
+                ", isBackstop=" + isBackstop +
+                ", traceLog=" + traceLog +
+                '}';
+    }
 }
