@@ -13,7 +13,6 @@ public interface RecommendService {
 
     public RecommendResponseDTO doRecommend(RecommendRequestDTO recommendRequestDTO);
 
-    public void fillStrategyIdByAdId(RecommendRequestDTO recommendRequestDTO);
 
     public  RecommendResponseDTO buildInitRecommeendResponse();
 

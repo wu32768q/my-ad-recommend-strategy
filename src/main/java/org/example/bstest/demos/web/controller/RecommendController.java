@@ -7,6 +7,7 @@ import org.example.bstest.demos.web.proxy.CaffieneCacheProxy;
 import org.example.bstest.demos.web.service.RecommendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,6 +28,11 @@ public class RecommendController {
                                            @RequestParam int expectNumber) {
 
         RecommendRequestDTO recommendRequestDTO = recommendService.buildInitRecommendRequest( tableName2Recall, strategyId, adId, expectNumber);
+        //        策略id优先，为空才考虑展位id
+        if( ! StringUtils.hasText(recommendRequestDTO.getStrategyId())) {
+            strategyId = caffieneCacheProxy.doGetStrategyIdProxy(recommendRequestDTO.getAdId());
+            recommendRequestDTO.setStrategyId(strategyId);
+        }
 
 
 //        return recommendService.doRecommend(recommendRequestDTO);

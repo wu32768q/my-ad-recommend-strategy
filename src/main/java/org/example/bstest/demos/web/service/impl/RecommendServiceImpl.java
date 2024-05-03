@@ -20,10 +20,7 @@ import org.example.bstest.demos.web.mapper.mysql.Ad2StrategyMapper;
 import org.example.bstest.demos.web.mapper.mysql.AgentMaterialMapper;
 import org.example.bstest.demos.web.proxy.ApplicationContextProxy;
 import org.example.bstest.demos.web.proxy.CaffieneCacheProxy;
-import org.example.bstest.demos.web.service.AdService;
-import org.example.bstest.demos.web.service.ElementService;
-import org.example.bstest.demos.web.service.RecommendService;
-import org.example.bstest.demos.web.service.StrategyService;
+import org.example.bstest.demos.web.service.*;
 import org.example.bstest.demos.web.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -57,8 +54,10 @@ public class RecommendServiceImpl implements RecommendService {
     @Autowired
     AdService adService;
 
+
+
     @Autowired
-    CaffieneCacheProxy caffieneCacheProxy;
+    RecommendPreService recommendPreService;
 
 
     @Override
@@ -79,8 +78,8 @@ public class RecommendServiceImpl implements RecommendService {
             );
             return recommendResponseDTO;
         }
-//        策略id优先，为空才考虑展位id
-        fillStrategyIdByAdId(recommendRequestDTO);
+
+//        recommendPreService.fillStrategyIdByAdId(recommendRequestDTO);
 //        填充策略id
         fillRequeset(recommendRequestDTO);
 //        获取展位对应策略id
@@ -198,14 +197,7 @@ public class RecommendServiceImpl implements RecommendService {
         return Boolean.FALSE;
     }
 
-    @Override
-    public void fillStrategyIdByAdId(RecommendRequestDTO recommendRequestDTO) {
-        if(StringUtils.hasText(recommendRequestDTO.getStrategyId())) {
-            return ;
-        }
-        String strategyId = caffieneCacheProxy.doGetStrategyIdProxy(recommendRequestDTO.getAdId());
-        recommendRequestDTO.setStrategyId(strategyId);
-    }
+
 
 //    兜底出人逻辑处理
     @Override
