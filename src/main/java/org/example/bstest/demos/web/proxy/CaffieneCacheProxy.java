@@ -71,7 +71,7 @@ public class CaffieneCacheProxy {
         RecommendResponseDTO recommendResponseDTO = cache4Agent.getIfPresent(hashCode);
 //        System.out.println(recommendRequestDTO.hashCode() + " " + recommendResponseDTO);
 
-        if(!ObjectUtils.isEmpty(recommendResponseDTO)) {
+        if(!ObjectUtils.isEmpty(recommendResponseDTO) && random.nextInt(5) > 1) {
 //            && random.nextInt(5) > 1
             try {
                 Thread.sleep(5);

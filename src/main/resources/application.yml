@@ -67,4 +67,7 @@ management:
 
 
 
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: error
 
