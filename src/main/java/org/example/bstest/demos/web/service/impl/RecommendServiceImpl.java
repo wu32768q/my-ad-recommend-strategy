@@ -55,7 +55,6 @@ public class RecommendServiceImpl implements RecommendService {
     AdService adService;
 
 
-
 //    @Autowired
 //    RecommendPreService recommendPreService;
 
