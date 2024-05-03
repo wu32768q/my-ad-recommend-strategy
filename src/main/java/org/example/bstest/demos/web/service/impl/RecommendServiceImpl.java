@@ -56,8 +56,8 @@ public class RecommendServiceImpl implements RecommendService {
 
 
 
-    @Autowired
-    RecommendPreService recommendPreService;
+//    @Autowired
+//    RecommendPreService recommendPreService;
 
 
     @Override
@@ -78,8 +78,8 @@ public class RecommendServiceImpl implements RecommendService {
             );
             return recommendResponseDTO;
         }
-
-//        recommendPreService.fillStrategyIdByAdId(recommendRequestDTO);
+//        策略id优先，为空才考虑展位id
+        fillStrategyIdByAdId(recommendRequestDTO);
 //        填充策略id
         fillRequeset(recommendRequestDTO);
 //        获取展位对应策略id
@@ -197,7 +197,14 @@ public class RecommendServiceImpl implements RecommendService {
         return Boolean.FALSE;
     }
 
-
+    @Override
+    public void fillStrategyIdByAdId(RecommendRequestDTO recommendRequestDTO) {
+        if(StringUtils.hasText(recommendRequestDTO.getStrategyId())) {
+            return ;
+        }
+        String strategyId = ad2StrategyMapper.getStrategyIdByAdId(recommendRequestDTO.getAdId());
+        recommendRequestDTO.setStrategyId(strategyId);
+    }
 
 //    兜底出人逻辑处理
     @Override

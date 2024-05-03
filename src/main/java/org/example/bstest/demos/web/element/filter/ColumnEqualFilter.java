@@ -4,7 +4,7 @@ import org.example.bstest.demos.web.DTO.RecommendRequestDTO;
 import org.example.bstest.demos.web.DTO.RecommendResponseDTO;
 import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 
-public class ColumnEqualFilter extends  AbstractFilter{
+public class ColumnEqualFilter extends  AbstractFilter {
 
 
     @Override

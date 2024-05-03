@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 @Component
-public class ColumnRangeFilter extends  AbstractFilter{
+public class ColumnRangeFilter extends  AbstractFilter {
 
     @Autowired
     MongoTemplate mongoTemplate;

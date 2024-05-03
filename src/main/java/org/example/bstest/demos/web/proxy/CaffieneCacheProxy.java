@@ -50,13 +50,13 @@ public class CaffieneCacheProxy {
 
 
 
-        cache4Ad2Strategy = Caffeine.newBuilder()
-                //初始数量
-                .initialCapacity(10)
-                //最大条数
-                .maximumSize(20)
-                .expireAfterAccess(1000, TimeUnit.MICROSECONDS)
-                .build();
+//        cache4Ad2Strategy = Caffeine.newBuilder()
+//                //初始数量
+//                .initialCapacity(10)
+//                //最大条数
+//                .maximumSize(20)
+//                .expireAfterAccess(1000, TimeUnit.MICROSECONDS)
+//                .build();
 
 
     }
@@ -71,7 +71,7 @@ public class CaffieneCacheProxy {
         RecommendResponseDTO recommendResponseDTO = cache4Agent.getIfPresent(hashCode);
 //        System.out.println(recommendRequestDTO.hashCode() + " " + recommendResponseDTO);
 
-        if( ! ObjectUtils.isEmpty(recommendResponseDTO) ) {
+        if( ! ObjectUtils.isEmpty(recommendResponseDTO)) {
 //            && random.nextInt(5) > 1
             try {
                 Thread.sleep(5);
@@ -89,17 +89,14 @@ public class CaffieneCacheProxy {
     }
 
 
-    public String doGetStrategyIdProxy(String adId) {
-        String strategyId = cache4Ad2Strategy.getIfPresent(adId);
-        if( ! StringUtils.isEmpty(strategyId)) {
-            return strategyId;
-        }
-        strategyId = adService.getStrategyIdByAdId(adId);
-        cache4Ad2Strategy.put(adId, strategyId);
-        return strategyId;
-
-    }
-
-
-
+//    public String doGetStrategyIdProxy(String adId) {
+//        String strategyId = cache4Ad2Strategy.getIfPresent(adId);
+//        if( ! StringUtils.isEmpty(strategyId)) {
+//            return strategyId;
+//        }
+//        strategyId = adService.getStrategyIdByAdId(adId);
+//        cache4Ad2Strategy.put(adId, strategyId);
+//        return strategyId;
+//
+//    }
 }
