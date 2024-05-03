@@ -22,9 +22,9 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     public boolean checkatableName(String tableName) {
-        System.out.println("@@@" + tableName);
+//        System.out.println("@@@" + tableName);
         int count = agentMaterialMapper.tableNameCheck(tableName);
-        System.out.println(count);
+//        System.out.println(count);
         return count == 1 ? Boolean.TRUE : Boolean.FALSE;
     }
 

@@ -11,9 +11,7 @@ import org.example.bstest.demos.web.decorators.element.CommonElementDecorator;
 import org.example.bstest.demos.web.element.AbstractElement;
 import org.example.bstest.demos.web.element.recall.WholeTableRecall;
 import org.example.bstest.demos.web.element.sort.RandomSort;
-import org.example.bstest.demos.web.element.sort.TopSort;
 import org.example.bstest.demos.web.entity.AgentEntity;
-import org.example.bstest.demos.web.entity.SortedAgentEntity;
 import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 import org.example.bstest.demos.web.entity.StrategyEntity;
 import org.example.bstest.demos.web.enums.ElementTypeEnum;
@@ -26,14 +24,13 @@ import org.example.bstest.demos.web.service.RecommendService;
 import org.example.bstest.demos.web.service.StrategyService;
 import org.example.bstest.demos.web.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -58,15 +55,12 @@ public class RecommendServiceImpl implements RecommendService {
 
     @Override
     public RecommendResponseDTO doRecommend(String tableName2Recall,String strategyId, String adId, int expectNumber) {
-        RecommendRequestDTO recommendRequestDTO = RecommendRequestDTO.builder()
-                .tableName2Recall(tableName2Recall)
-                .strategyId(strategyId)
-                .adId(adId)
-                .expectNumber(expectNumber > 0 ? expectNumber : 1)
-                .build();
+        RecommendRequestDTO recommendRequestDTO = buildInitRecommendRequest( tableName2Recall, strategyId, adId, expectNumber);
 
 //        构造并初始化response
         RecommendResponseDTO recommendResponseDTO = buildInitRecommeendResponse();
+        Runtime runtime = Runtime.getRuntime();
+//        System.out.println("runtime" + " " +runtime.availableProcessors() );
 
 //        request参数检查
         Boolean check = requestCheck(recommendRequestDTO);
@@ -111,11 +105,11 @@ public class RecommendServiceImpl implements RecommendService {
                 continue;
             }
             ElementTypeEnum elementTypeEnum = elementEntity.getElementTypeEnum();
-            System.out.println(elementTypeEnum);
+//            System.out.println(elementTypeEnum);
             try {
 //                获取组件class,枚举类对象常量不为空所以不用判空
                 Class<? extends AbstractElement> myClass = elementTypeEnum.getElementClass();
-                System.out.println(myClass);
+//                System.out.println(myClass);
 //                反射创建对象
 //                AbstractElement element2Process = myClass.newInstance();
                 AbstractElement element2Process = applicationContextProxy.getBean(myClass);
@@ -126,7 +120,7 @@ public class RecommendServiceImpl implements RecommendService {
                     recommendResponseDTO.getTraceLog().add(sb4msg);
                 }
                 Class<? extends AbstractElementDecorator> decoratorClass = ObjectUtils.isEmpty(recommendRequestDTO.getDecoratorClass()) ? CommonElementDecorator.class : recommendRequestDTO.getDecoratorClass();
-                System.out.println(decoratorClass);
+//                System.out.println(decoratorClass);
 //                获取request指定的装饰器
                 AbstractElementDecorator elementDecorator = applicationContextProxy.getBean(decoratorClass);
 //                装饰器对元素封装
@@ -172,13 +166,10 @@ public class RecommendServiceImpl implements RecommendService {
 
         buildFinalResponse(recommendRequestDTO, recommendResponseDTO, true,
                 getCommonTimePrefix4Msg() + MsgConstants.BUILD_SUCCESS);
+
 //        变动response中agent的推荐次数
-        recommendResponseDTO.getAgentEntityList().forEach(e->{
-            String id = e.getId();
-            int recommendCount = agentMaterialMapper.getRecommendCountById(id, recommendRequestDTO.getTableName2Recall());
-            agentMaterialMapper.increaseRecommendCountById(id, recommendRequestDTO.getTableName2Recall(), recommendCount + 1);
-                }
-        );
+        List<AgentEntity> agentList = recommendResponseDTO.getAgentEntityList();
+        updateRecommendCountByAgentList(agentList, recommendRequestDTO);
         return recommendResponseDTO;
     }
 
@@ -272,6 +263,29 @@ public class RecommendServiceImpl implements RecommendService {
 
         abstractElement.process(recommendRequestDTO, recommendResponseDTO, new ElementEntity());
     }
+
+
+    @Async
+    @Override
+    public void updateRecommendCountByAgentList(List<AgentEntity> agentList, RecommendRequestDTO recommendRequestDTO) {
+        agentList.forEach(e->{
+                    String id = e.getId();
+                    int recommendCount = agentMaterialMapper.getRecommendCountById(id, recommendRequestDTO.getTableName2Recall());
+                    agentMaterialMapper.increaseRecommendCountById(id, recommendRequestDTO.getTableName2Recall(), recommendCount + 1);
+                }
+        );
+    }
+
+    @Override
+    public RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall,String strategyId, String adId, int expectNumber) {
+        return RecommendRequestDTO.builder()
+                .tableName2Recall(tableName2Recall)
+                .strategyId(strategyId)
+                .adId(adId)
+                .expectNumber(expectNumber > 0 ? expectNumber : 1)
+                .build();
+    }
+
 
 
 }

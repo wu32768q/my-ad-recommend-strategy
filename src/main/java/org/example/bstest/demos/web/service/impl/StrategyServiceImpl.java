@@ -69,7 +69,7 @@ public class StrategyServiceImpl implements StrategyService {
     @Override
     public RouteResponseDTO getStrategyList() {
         List<StrategyEntity> list =  strategyMapper.getStrategyList();
-        list.forEach(System.out::println);
+//        list.forEach(System.out::println);
         return new RouteResponseDTO(list, ResponseStatusEnum.SUCESS);
     }
 

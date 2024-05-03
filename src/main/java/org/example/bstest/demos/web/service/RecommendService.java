@@ -3,7 +3,11 @@ package org.example.bstest.demos.web.service;
 import org.example.bstest.demos.web.DTO.RecommendRequestDTO;
 import org.example.bstest.demos.web.DTO.RecommendResponseDTO;
 import org.example.bstest.demos.web.DTO.RouteResponseDTO;
+import org.example.bstest.demos.web.entity.AgentEntity;
 import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
+import org.springframework.scheduling.annotation.Async;
+
+import java.util.List;
 
 public interface RecommendService {
 
@@ -27,4 +31,9 @@ public interface RecommendService {
 
     public void limitAgentList(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO);
 
-}
+    @Async
+    void updateRecommendCountByAgentList(List<AgentEntity> agentList, RecommendRequestDTO recommendRequestDTO);
+
+    public RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall,String strategyId, String adId, int expectNumber);
+
+    }

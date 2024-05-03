@@ -32,7 +32,7 @@ public class WholeTableRecall extends AbstrackRecall{
     public void doRecall(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         String tableName = recommendRequestDTO.getTableName2Recall();
 
-        System.out.println(agentService);
+//        System.out.println(agentService);
 //        try {
 //            agentService.checkatableName(tableName);
 //        } catch (Exception e) {

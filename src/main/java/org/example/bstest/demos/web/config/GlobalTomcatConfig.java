@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 //解决tomcat限制非协议字符问题
 @Configuration
-public class TomcatConfig {
+public class GlobalTomcatConfig {
 
     @Bean
     public TomcatServletWebServerFactory webServerFactory() {

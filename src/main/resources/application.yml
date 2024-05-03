@@ -7,13 +7,13 @@ server:
       enabled: true
     threads:
       max: 200
-      min-spare: 100
+      min-spare: 200
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml    # mapper映射文件位置
   type-aliases-package: org.example.bstest.demos.web.DTO   # 实体类所在的位置
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   #用于控制台打印sql语句
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl   #用于控制台打印sql语句
 
 spring:
   application:
@@ -35,6 +35,10 @@ spring:
       database: mydb
       username: root
       password: root
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=100,expireAfterWrite=10s
 
 # application.yml
 management:
@@ -59,6 +63,7 @@ management:
         http:
           server:
             requests: true # 开启 http server 的请求监控
+
 
 
 

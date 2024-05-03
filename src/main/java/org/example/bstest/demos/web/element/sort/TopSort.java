@@ -19,13 +19,13 @@ public class TopSort extends AbstractSort{
         if(list2Sort.size() <= expectNumber) {
             return ;
         }
-        System.out.println(list2Sort);
+//        System.out.println(list2Sort);
         List<AgentEntity>list = list2Sort
                 .stream()
                 .sorted((o1, o2) -> o2.getQualityValue() - o1.getQualityValue())
                 .limit(expectNumber)
                 .collect(Collectors.toList());
-        System.out.println(list);
+//        System.out.println(list);
         recommendResponseDTO.setAgentEntityList(list);
     }
 
