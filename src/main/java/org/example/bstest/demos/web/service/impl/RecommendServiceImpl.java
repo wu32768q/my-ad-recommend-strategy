@@ -97,8 +97,23 @@ public class RecommendServiceImpl implements RecommendService {
 //         获取各组件id对应ctx的list
         List<String> list = strategyEntity.getElementList();
         recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg() + MsgConstants.PREHANDLE_SUCCESS_AND_START_PROECESS);
+        System.out.println("!!!!!" + recommendRequestDTO.getTableName2Recall());
         for (int position = 0; position < list.size(); position++) {
             ElementEntity elementEntity = elementService.getElementById(list.get(position));
+//            数量检查，快速返回
+            if(isResEnough(recommendRequestDTO, recommendResponseDTO) &&
+                    elementEntity.getElementTypeEnum().getElementClass()
+                            .isAssignableFrom(ElementTypeEnum.RECALL_TYPE.getElementClass())) {
+
+                this.limitAgentList(recommendRequestDTO, recommendResponseDTO);
+                recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg() + MsgConstants.RES_NUMBER_LIMIT);
+
+                buildFinalResponse(recommendRequestDTO, recommendResponseDTO, true,
+                        getCommonTimePrefix4Msg() + MsgConstants.BUILD_SUCCESS);
+                return recommendResponseDTO;
+            }
+
+            System.out.println(elementEntity);
 //            判空
             if(ObjectUtils.isEmpty(elementEntity) || ObjectUtils.isEmpty(elementEntity.getElementTypeEnum())) {
                 StringBuilder sb4msg= new StringBuilder();
@@ -145,15 +160,7 @@ public class RecommendServiceImpl implements RecommendService {
                 ex.printStackTrace();
             }
 
-            if(isResEnough(recommendRequestDTO, recommendResponseDTO)) {
 
-                this.limitAgentList(recommendRequestDTO, recommendResponseDTO);
-                recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg() + MsgConstants.RES_NUMBER_LIMIT);
-
-                buildFinalResponse(recommendRequestDTO, recommendResponseDTO, true,
-                        getCommonTimePrefix4Msg() + MsgConstants.BUILD_SUCCESS);
-                return recommendResponseDTO;
-            }
         }
 //        后处理兜底保险逻辑
         recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg() + MsgConstants.BACKSTOP_TRIGGER);
@@ -275,6 +282,7 @@ public class RecommendServiceImpl implements RecommendService {
     public void updateRecommendCountByAgentList(List<AgentEntity> agentList, RecommendRequestDTO recommendRequestDTO) {
         agentList.forEach(e->{
                     String id = e.getId();
+
                     int recommendCount = agentMaterialMapper.getRecommendCountById(id, recommendRequestDTO.getTableName2Recall());
                     agentMaterialMapper.increaseRecommendCountById(id, recommendRequestDTO.getTableName2Recall(), recommendCount + 1);
                 }

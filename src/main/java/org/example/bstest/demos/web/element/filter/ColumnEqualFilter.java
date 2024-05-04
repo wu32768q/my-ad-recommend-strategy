@@ -3,7 +3,10 @@ package org.example.bstest.demos.web.element.filter;
 import org.example.bstest.demos.web.DTO.RecommendRequestDTO;
 import org.example.bstest.demos.web.DTO.RecommendResponseDTO;
 import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class ColumnEqualFilter extends  AbstractFilter {
 
 

@@ -43,6 +43,7 @@ public class WholeTableRecall extends AbstrackRecall{
             return ;
         }
         List<AgentEntity> list = agentService.getAgentWholeTable(tableName);
+        list.stream().forEach(System.out::println);
         recommendResponseDTO.getAgentEntityList().addAll(list);
 
     }

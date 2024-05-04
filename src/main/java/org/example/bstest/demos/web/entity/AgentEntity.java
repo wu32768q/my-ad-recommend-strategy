@@ -24,6 +24,7 @@ public class AgentEntity {
     int workingYears;
 
     int level;
+
 //    经纪人q值
     int qualityValue;
 
