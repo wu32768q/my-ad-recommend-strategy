@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ColumnRangeFilter extends  AbstractFilter {
@@ -25,11 +26,13 @@ public class ColumnRangeFilter extends  AbstractFilter {
     @Override
     public void doFilter(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         List<AgentEntity> list = recommendResponseDTO.getAgentEntityList();
-        list.stream().filter(e->{
+//        System.out.println(",,,," + elementEntity);
+        list = list.stream().filter(e -> {
             try {
-                Field field = elementEntity.getClass().getDeclaredField(elementEntity.getColumnName());
+                Field field = AgentEntity.class.getDeclaredField(elementEntity.getColumnName());
                 field.setAccessible(true);
-                if((int) field.get(e) < elementEntity.getRightRule() || (int) field.get(e) > elementEntity.getLeftRule()) {
+//                System.out.println("......" + field.get(e));
+                if (((int) field.get(e)) < elementEntity.getRightRule() && ((int) field.get(e)) > elementEntity.getLeftRule()) {
                     return true;
                 }
                 return false;
@@ -39,6 +42,7 @@ public class ColumnRangeFilter extends  AbstractFilter {
                 ex.printStackTrace();
             }
             return false;
-        });
+        }).collect(Collectors.toList());
+        recommendResponseDTO.setAgentEntityList(list);
     }
 }

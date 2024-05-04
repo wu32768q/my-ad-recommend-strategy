@@ -13,6 +13,8 @@ import java.util.List;
 public class RecommendResponseDTO {
 
 
+
+
     List<AgentEntity> agentEntityList;
 
 //    被过滤经纪人信息
@@ -27,6 +29,10 @@ public class RecommendResponseDTO {
     Boolean isBackstop;
 
     List<String> traceLog;
+
+    RecommendResponseDTO recommendResponseDTO;
+
+    boolean isThroughCache;
 
     @Override
     public String toString() {

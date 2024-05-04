@@ -34,7 +34,7 @@ class BsTestApplicationTests {
         final String CHARACTER_HEAD_AND_TAIL = "'";
         String tableName = CHARACTER_HEAD_AND_TAIL+"ad_to_strategy_table"+CHARACTER_HEAD_AND_TAIL;
 
-        System.out.println(agentMaterialMapper.tableNameCheck(tableName));
+//        System.out.println(agentMaterialMapper.tableNameCheck(tableName));
     }
 
 }

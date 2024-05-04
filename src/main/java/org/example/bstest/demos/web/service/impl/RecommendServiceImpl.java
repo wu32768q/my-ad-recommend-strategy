@@ -19,7 +19,6 @@ import org.example.bstest.demos.web.enums.ResponseStatusEnum;
 import org.example.bstest.demos.web.mapper.mysql.Ad2StrategyMapper;
 import org.example.bstest.demos.web.mapper.mysql.AgentMaterialMapper;
 import org.example.bstest.demos.web.proxy.ApplicationContextProxy;
-import org.example.bstest.demos.web.proxy.CaffieneCacheProxy;
 import org.example.bstest.demos.web.service.*;
 import org.example.bstest.demos.web.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,7 @@ import org.springframework.util.StringUtils;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -97,23 +97,26 @@ public class RecommendServiceImpl implements RecommendService {
 //         获取各组件id对应ctx的list
         List<String> list = strategyEntity.getElementList();
         recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg() + MsgConstants.PREHANDLE_SUCCESS_AND_START_PROECESS);
-        System.out.println("!!!!!" + recommendRequestDTO.getTableName2Recall());
+//        System.out.println("!!!!!" + recommendRequestDTO.getTableName2Recall());
         for (int position = 0; position < list.size(); position++) {
             ElementEntity elementEntity = elementService.getElementById(list.get(position));
 //            数量检查，快速返回
             if(isResEnough(recommendRequestDTO, recommendResponseDTO) &&
                     elementEntity.getElementTypeEnum().getElementClass()
                             .isAssignableFrom(ElementTypeEnum.RECALL_TYPE.getElementClass())) {
-
                 this.limitAgentList(recommendRequestDTO, recommendResponseDTO);
                 recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg() + MsgConstants.RES_NUMBER_LIMIT);
 
                 buildFinalResponse(recommendRequestDTO, recommendResponseDTO, true,
                         getCommonTimePrefix4Msg() + MsgConstants.BUILD_SUCCESS);
+                if( ! recommendRequestDTO.isTraceLogSwitch()) {
+                    recommendResponseDTO.setTraceLog(Collections.emptyList());
+                }
+                recommendResponseDTO.setIsBackstop(false);
                 return recommendResponseDTO;
             }
 
-            System.out.println(elementEntity);
+//            System.out.println(elementEntity);
 //            判空
             if(ObjectUtils.isEmpty(elementEntity) || ObjectUtils.isEmpty(elementEntity.getElementTypeEnum())) {
                 StringBuilder sb4msg= new StringBuilder();
@@ -146,10 +149,12 @@ public class RecommendServiceImpl implements RecommendService {
 //                装饰器对元素封装
                 elementDecorator.setAbstractElement(element2Process);
 //                链路记录
-                String sb4msg = getCommonTimePrefix4Msg() + MsgConstants.COMPONENT_PROCESS_MESSAGE_PREFIX
+                recommendResponseDTO.getTraceLog().add("---------------------------------------------------------------------------");
+                String sb4msg =  getCommonTimePrefix4Msg() + MsgConstants.COMPONENT_PROCESS_MESSAGE_PREFIX
                         + myClass.getSimpleName() + MsgConstants.COMMON_SEPARATOR
                         + MsgConstants.DECORATOR_PROCESS_MESSAGE_PREFIX + decoratorClass.getSimpleName();
                 recommendResponseDTO.getTraceLog().add(sb4msg);
+                recommendResponseDTO.setResponseStatusEnum(ResponseStatusEnum.SUCESS);
 
 //                执行单个builder具体逻辑
                 elementDecorator.process(recommendRequestDTO, recommendResponseDTO, elementEntity);
@@ -162,6 +167,20 @@ public class RecommendServiceImpl implements RecommendService {
 
 
         }
+
+        if(isResEnough(recommendRequestDTO, recommendResponseDTO)) {
+            this.limitAgentList(recommendRequestDTO, recommendResponseDTO);
+            recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg() + MsgConstants.RES_NUMBER_LIMIT);
+
+            buildFinalResponse(recommendRequestDTO, recommendResponseDTO, true,
+                    getCommonTimePrefix4Msg() + MsgConstants.BUILD_SUCCESS);
+            if( ! recommendRequestDTO.isTraceLogSwitch()) {
+                recommendResponseDTO.setTraceLog(Collections.emptyList());
+            }
+            recommendResponseDTO.setIsBackstop(false);
+            return recommendResponseDTO;
+        }
+
 //        后处理兜底保险逻辑
         recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg() + MsgConstants.BACKSTOP_TRIGGER);
         try {
@@ -182,6 +201,11 @@ public class RecommendServiceImpl implements RecommendService {
 //        变动response中agent的推荐次数
         List<AgentEntity> agentList = recommendResponseDTO.getAgentEntityList();
         updateRecommendCountByAgentList(agentList, recommendRequestDTO);
+        recommendResponseDTO.setResponseStatusEnum(ResponseStatusEnum.SUCESS);
+        recommendResponseDTO.setCode(200);
+        if( ! recommendRequestDTO.isTraceLogSwitch()) {
+            recommendResponseDTO.setTraceLog(Collections.emptyList());
+        }
         return recommendResponseDTO;
     }
 
@@ -290,12 +314,13 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
     @Override
-    public RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall,String strategyId, String adId, int expectNumber) {
+    public RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall, String strategyId, String adId, int expectNumber, boolean traceLogSwitch) {
         return RecommendRequestDTO.builder()
                 .tableName2Recall(tableName2Recall)
                 .strategyId(strategyId)
                 .adId(adId)
                 .expectNumber(expectNumber > 0 ? expectNumber : 1)
+                .traceLogSwitch(traceLogSwitch)
                 .build();
     }
 

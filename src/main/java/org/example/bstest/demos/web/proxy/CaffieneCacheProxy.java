@@ -40,7 +40,7 @@ public class CaffieneCacheProxy {
                 //最大条数
                 .maximumSize(20)
                 //最后一次读或写操作后经过指定时间过期
-                .expireAfterAccess(5000, TimeUnit.MICROSECONDS)
+                .expireAfterAccess(10, TimeUnit.SECONDS)
                 //监听缓存被移除
 //            .removalListener((key, val, removalCause) -> { })
                 //记录命中
@@ -66,25 +66,27 @@ public class CaffieneCacheProxy {
 //        Map<Integer, RecommendResponseDTO> map = cache4Agent.asMap();
 //        map.forEach((k,v)->System.out.println(k.toString() + " " + v.toString()));
         Random random = new Random();
-
         int hashCode = recommendRequestDTO.hashCode();
         RecommendResponseDTO recommendResponseDTO = cache4Agent.getIfPresent(hashCode);
-//        System.out.println(recommendRequestDTO.hashCode() + " " + recommendResponseDTO);
-
-        if(!ObjectUtils.isEmpty(recommendResponseDTO) && random.nextInt(5) > 1) {
+        if(!ObjectUtils.isEmpty(recommendResponseDTO)) {
 //            && random.nextInt(5) > 1
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if(recommendRequestDTO.isTraceLogSwitch()) {
+                return RecommendResponseDTO.builder()
+                        .recommendResponseDTO(recommendResponseDTO)
+                        .isThroughCache(true)
+                        .build();
+            }
+
             return recommendResponseDTO;
         }
-
         recommendResponseDTO = recommendService.doRecommend(recommendRequestDTO);
         cache4Agent.put(hashCode, recommendResponseDTO);
-        recommendResponseDTO.getTraceLog().add(recommendService.getCommonTimePrefix4Msg() + MsgConstants.BUILD_BY_CACHE);
-        return recommendResponseDTO;
+         return recommendResponseDTO;
 
     }
 

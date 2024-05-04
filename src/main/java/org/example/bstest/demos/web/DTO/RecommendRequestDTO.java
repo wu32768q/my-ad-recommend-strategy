@@ -26,6 +26,8 @@ public class RecommendRequestDTO {
 //    使用的装饰器对象
     Class<? extends AbstractElementDecorator> decoratorClass;
 
+    boolean traceLogSwitch;
+
 
     @Override
     public String toString() {

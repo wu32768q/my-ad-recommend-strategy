@@ -34,6 +34,7 @@ public interface RecommendService {
     @Async
     void updateRecommendCountByAgentList(List<AgentEntity> agentList, RecommendRequestDTO recommendRequestDTO);
 
-    public RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall,String strategyId, String adId, int expectNumber);
+//    public RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall,String strategyId, String adId, int expectNumber);
 
-    }
+    RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall, String strategyId, String adId, int expectNumber, boolean traceLogSwitch);
+}
