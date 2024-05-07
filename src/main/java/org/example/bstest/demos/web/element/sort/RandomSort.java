@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 public class RandomSort extends AbstractSort{
 
     @Override
-    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void process(RecommendRequestDTO recommendRequestDTO,
+                        RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         doSort(recommendRequestDTO, recommendResponseDTO,  elementEntity);
     }
 

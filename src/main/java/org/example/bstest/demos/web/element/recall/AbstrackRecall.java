@@ -11,10 +11,12 @@ import java.util.List;
 @Component
 public abstract class AbstrackRecall implements AbstractElement {
 
-    public abstract void doRecall(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity);
+    public abstract void doRecall(RecommendRequestDTO recommendRequestDTO,
+                                  RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity);
 
     @Override
-    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void process(RecommendRequestDTO recommendRequestDTO,
+                        RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         doRecall(recommendRequestDTO, recommendResponseDTO, elementEntity);
     }
 }

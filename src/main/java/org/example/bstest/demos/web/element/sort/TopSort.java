@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 public class TopSort extends AbstractSort{
 
     @Override
-    public void doSort(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void doSort(RecommendRequestDTO recommendRequestDTO,
+                       RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         int expectNumber = recommendRequestDTO.getExpectNumber();
         List<AgentEntity> list2Sort = recommendResponseDTO.getAgentEntityList();
         if(list2Sort.size() <= expectNumber) {

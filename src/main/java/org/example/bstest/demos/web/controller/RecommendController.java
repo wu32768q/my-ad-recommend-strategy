@@ -32,7 +32,8 @@ public class RecommendController {
                                            @RequestParam int expectNumber,
                                            @RequestParam boolean traceLogSwitch) {
 
-        RecommendRequestDTO recommendRequestDTO = recommendService.buildInitRecommendRequest( tableName2Recall, strategyId, adId, expectNumber, traceLogSwitch);
+        RecommendRequestDTO recommendRequestDTO = recommendService
+                .buildInitRecommendRequest( tableName2Recall, strategyId, adId, expectNumber, traceLogSwitch);
 
 
 //        return recommendService.doRecommend(recommendRequestDTO);

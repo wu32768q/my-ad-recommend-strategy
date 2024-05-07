@@ -15,6 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -36,13 +37,18 @@ public class AuthController {
 
         // 将token设置到cookie中
         Cookie tokenCookie = new Cookie("auth_token", token);
-        tokenCookie.setMaxAge(60 * 60 ); // 设置过期时间为1小时
-        tokenCookie.setSecure(false); // 如果使用HTTPS，则设置为true
-        tokenCookie.setHttpOnly(true); // 防止通过JavaScript访问cookie
+        // 设置过期时间为1小时
+        tokenCookie.setMaxAge(60 * 60 );
+        // 如果使用HTTPS，则设置为true
+        tokenCookie.setSecure(false);
+        // 防止通过JavaScript访问cookie
+        tokenCookie.setHttpOnly(true);
 
         // 响应中包含cookie
-        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-        response.addCookie(tokenCookie);
+        HttpServletResponse response = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
+        if (response != null) {
+            response.addCookie(tokenCookie);
+        }
 
         return RouteResponseDTO.ok(token);
     }

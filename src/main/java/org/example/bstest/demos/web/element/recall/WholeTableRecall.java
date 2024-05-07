@@ -29,7 +29,8 @@ public class WholeTableRecall extends AbstrackRecall{
 
 
     @Override
-    public void doRecall(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void doRecall(RecommendRequestDTO recommendRequestDTO,
+                         RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         String tableName = recommendRequestDTO.getTableName2Recall();
 
 //        System.out.println(agentService);
@@ -50,7 +51,8 @@ public class WholeTableRecall extends AbstrackRecall{
 
 
     @Override
-    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void process(RecommendRequestDTO recommendRequestDTO,
+                        RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         doRecall(recommendRequestDTO, recommendResponseDTO, elementEntity);
 
     }

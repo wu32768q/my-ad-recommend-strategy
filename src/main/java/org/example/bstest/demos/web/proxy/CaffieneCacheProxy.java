@@ -5,6 +5,7 @@ import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
+import com.google.common.util.concurrent.RateLimiter;
 import org.example.bstest.demos.web.DTO.RecommendRequestDTO;
 import org.example.bstest.demos.web.DTO.RecommendResponseDTO;
 import org.example.bstest.demos.web.constants.MsgConstants;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +31,8 @@ public class CaffieneCacheProxy {
     @Autowired
     AdService adService;
 
+    RateLimiter rateLimiter;
+
 
     Cache<Integer , RecommendResponseDTO> cache4Agent;
     Cache<String , String> cache4Ad2Strategy;
@@ -40,7 +45,7 @@ public class CaffieneCacheProxy {
                 //最大条数
                 .maximumSize(20)
                 //最后一次读或写操作后经过指定时间过期
-                .expireAfterAccess(10, TimeUnit.SECONDS)
+                .expireAfterAccess(2, TimeUnit.SECONDS)
                 //监听缓存被移除
 //            .removalListener((key, val, removalCause) -> { })
                 //记录命中
@@ -48,7 +53,7 @@ public class CaffieneCacheProxy {
                 .build();
 //            key -> recommendService.doRecommend(key)
 
-
+        rateLimiter = RateLimiter.create(100, Duration.ofSeconds(3));
 
 //        cache4Ad2Strategy = Caffeine.newBuilder()
 //                //初始数量
@@ -84,6 +89,18 @@ public class CaffieneCacheProxy {
 
             return recommendResponseDTO;
         }
+        if(!rateLimiter.tryAcquire()) {
+            return RecommendResponseDTO.builder()
+                    .isThroughCache(Boolean.FALSE)
+                    .msg("未拿到令牌，请稍后重试")
+                    .code(-2)
+                    .isBackstop(Boolean.FALSE)
+                    .agentEntityList(Collections.EMPTY_LIST)
+                    .sortedAgentEntityList(Collections.EMPTY_LIST)
+                    .build();
+
+        }
+        System.out.println("缓存未命中");
         recommendResponseDTO = recommendService.doRecommend(recommendRequestDTO);
         cache4Agent.put(hashCode, recommendResponseDTO);
          return recommendResponseDTO;

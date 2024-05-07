@@ -11,12 +11,14 @@ public class ColumnEqualFilter extends  AbstractFilter {
 
 
     @Override
-    public void doFilter(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void doFilter(RecommendRequestDTO recommendRequestDTO,
+                         RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
 
     }
 
     @Override
-    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void process(RecommendRequestDTO recommendRequestDTO,
+                        RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         this.doFilter(recommendRequestDTO, recommendResponseDTO, elementEntity);
     }
 }

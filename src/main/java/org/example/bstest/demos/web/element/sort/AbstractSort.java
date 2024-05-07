@@ -13,12 +13,14 @@ public abstract class AbstractSort implements AbstractElement {
 
 
     @Override
-    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void process(RecommendRequestDTO recommendRequestDTO,
+                        RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         doSort( recommendRequestDTO, recommendResponseDTO, elementEntity);
     }
 
 
-    public abstract void doSort(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity);
+    public abstract void doSort(RecommendRequestDTO recommendRequestDTO,
+                                RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity);
 
 
 

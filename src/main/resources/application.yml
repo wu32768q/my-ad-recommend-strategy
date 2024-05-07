@@ -6,8 +6,8 @@ server:
     mbeanregistry:
       enabled: true
     threads:
-      max: 200
-      min-spare: 200
+      max: 150
+      min-spare: 150
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml    # mapper映射文件位置
@@ -36,6 +36,7 @@ spring:
       database: mydb
       username: root
       password: root
+
 
   cache:
     type: caffeine
@@ -72,3 +73,24 @@ logging:
   level:
     org.springframework.data.mongodb.core.MongoTemplate: off
 
+#配置熔断策略：
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        #强制打开熔断器
+        forceOpen: false
+        # 触发熔断错误⽐例阈值，默认值50%
+        errorThresholdPercentage: 50
+        # 熔断后休眠时⻓，默认值5秒
+        sleepWindowInMilliseconds: 3000
+        # 熔断触发最⼩请求次数，默认值是20
+        requestVolumeThreshold: 5
+      execution:
+        isolation:
+          thread:
+            # 熔断超时设置，默认为1分钟
+            timeoutInMilliseconds: 2000
+feign:
+  circuitbreaker:
+    enabled: true

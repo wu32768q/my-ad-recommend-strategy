@@ -6,7 +6,8 @@ import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 
 public class DemoFilter extends AbstractFilter{
     @Override
-    public void doFilter(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void doFilter(RecommendRequestDTO recommendRequestDTO,
+                         RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
 
     }
 }

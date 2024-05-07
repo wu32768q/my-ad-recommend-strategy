@@ -5,6 +5,7 @@ import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 import org.example.bstest.demos.web.mapper.mongodb.ElementMapper;
 import org.example.bstest.demos.web.service.ElementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class ElementServiceImpl implements ElementService {
     }
 
     @Override
+    @Caching
     public ElementEntity getElementById(String id) {
         return elementMapper.getElementById(id);
     }

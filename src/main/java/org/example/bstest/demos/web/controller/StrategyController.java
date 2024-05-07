@@ -51,7 +51,7 @@ public class StrategyController {
     @GetMapping("/strategy/list")
     @ResponseBody
     public RouteResponseDTO<List<StrategyDTO>> getStrategyList() {
-        RouteResponseDTO<List<StrategyEntity>>  dtoOfEntity2Handle =  strategyService.getStrategyList();
+        RouteResponseDTO<List<StrategyEntity>>  dtoOfEntity2Handle = strategyService.getStrategyList();
         return strategyService.entity2DtoHandle(dtoOfEntity2Handle);
 
     }

@@ -8,10 +8,12 @@ import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 public abstract class AbstractFilter implements AbstractElement {
 
     @Override
-    public  void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public  void process(RecommendRequestDTO recommendRequestDTO,
+                         RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         doFilter( recommendRequestDTO, recommendResponseDTO, elementEntity);
     }
 
-    public abstract void doFilter(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity);
+    public abstract void doFilter(RecommendRequestDTO recommendRequestDTO,
+                                  RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity);
 
 }

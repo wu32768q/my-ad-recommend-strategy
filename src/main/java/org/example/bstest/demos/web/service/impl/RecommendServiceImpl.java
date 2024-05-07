@@ -1,6 +1,11 @@
 package org.example.bstest.demos.web.service.impl;
 
 
+//import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+//import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.google.common.util.concurrent.RateLimiter;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.example.bstest.demos.web.constants.DbConstants;
 import org.example.bstest.demos.web.constants.MsgConstants;
 import org.example.bstest.demos.web.DTO.RecommendRequestDTO;
@@ -25,9 +30,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.SocketUtils;
 import org.springframework.util.StringUtils;
 
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +66,15 @@ public class RecommendServiceImpl implements RecommendService {
 //    RecommendPreService recommendPreService;
 
 
+
     @Override
+    @HystrixCommand(fallbackMethod = "fallBack4DoRecommend",
+            threadPoolKey = "doRecommendMethodThreadPool",
+            threadPoolProperties = {
+            @HystrixProperty(name="coreSize",value = "4"),// 核心线程数
+            @HystrixProperty(name="maxQueueSize",value="20") // 等待队列⻓度
+    })
+    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "1000")
     public RecommendResponseDTO doRecommend(RecommendRequestDTO recommendRequestDTO) {
 
 //        构造并初始化response
@@ -96,7 +111,8 @@ public class RecommendServiceImpl implements RecommendService {
         StrategyEntity strategyEntity = routeResponseDTO.getResult();
 //         获取各组件id对应ctx的list
         List<String> list = strategyEntity.getElementList();
-        recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg() + MsgConstants.PREHANDLE_SUCCESS_AND_START_PROECESS);
+        recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg()
+                + MsgConstants.PREHANDLE_SUCCESS_AND_START_PROECESS);
 //        System.out.println("!!!!!" + recommendRequestDTO.getTableName2Recall());
         for (int position = 0; position < list.size(); position++) {
             ElementEntity elementEntity = elementService.getElementById(list.get(position));
@@ -139,10 +155,13 @@ public class RecommendServiceImpl implements RecommendService {
 //                element2Process.process(recommendRequestDTO, recommendResponseDTO, elementEntity);
                 if(ObjectUtils.isEmpty(recommendRequestDTO.getDecoratorClass())) {
                     recommendRequestDTO.setDecoratorClass(CommonElementDecorator.class);
-                    String sb4msg = getCommonTimePrefix4Msg() + MsgConstants.FAIL_PREFIX + MsgConstants.REQUESTDTO_LACK_DECORATOR_MSG;
+                    String sb4msg = getCommonTimePrefix4Msg() + MsgConstants.FAIL_PREFIX
+                            + MsgConstants.REQUESTDTO_LACK_DECORATOR_MSG;
                     recommendResponseDTO.getTraceLog().add(sb4msg);
                 }
-                Class<? extends AbstractElementDecorator> decoratorClass = ObjectUtils.isEmpty(recommendRequestDTO.getDecoratorClass()) ? CommonElementDecorator.class : recommendRequestDTO.getDecoratorClass();
+                Class<? extends AbstractElementDecorator> decoratorClass = ObjectUtils
+                        .isEmpty(recommendRequestDTO.getDecoratorClass()) ?
+                        CommonElementDecorator.class : recommendRequestDTO.getDecoratorClass();
 //                System.out.println(decoratorClass);
 //                获取request指定的装饰器
                 AbstractElementDecorator elementDecorator = applicationContextProxy.getBean(decoratorClass);
@@ -219,7 +238,8 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
     @Override
-    public Boolean isResEnough(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO) {
+    public Boolean isResEnough(RecommendRequestDTO recommendRequestDTO,
+                               RecommendResponseDTO recommendResponseDTO) {
         List<AgentEntity> list = recommendResponseDTO.getAgentEntityList();
         if(recommendRequestDTO.getExpectNumber() <= list.size()) {
             return Boolean.TRUE;
@@ -238,7 +258,9 @@ public class RecommendServiceImpl implements RecommendService {
 
 //    兜底出人逻辑处理
     @Override
-    public void backstopHandle(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) throws InstantiationException, IllegalAccessException {
+    public void backstopHandle(RecommendRequestDTO recommendRequestDTO,
+                               RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity)
+            throws InstantiationException, IllegalAccessException {
         int currentSize = recommendResponseDTO.getAgentEntityList().size();
         if(currentSize >= recommendRequestDTO.getExpectNumber()) {
             return;
@@ -254,7 +276,8 @@ public class RecommendServiceImpl implements RecommendService {
     public Boolean requestCheck(RecommendRequestDTO recommendRequestDTO) {
         String adId = recommendRequestDTO.getAdId();
         String strategyId = recommendRequestDTO.getStrategyId();
-        if(!StringUtils.hasText(adId) && !StringUtils.hasText(strategyId) ||  Integer.compare(0, recommendRequestDTO.getExpectNumber()) > -1) {
+        if(!StringUtils.hasText(adId) && !StringUtils.hasText(strategyId)
+                ||  Integer.compare(0, recommendRequestDTO.getExpectNumber()) > -1) {
             return Boolean.FALSE;
         }
 
@@ -264,7 +287,8 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
 //    构造出人失败响应dto
-    public void buildFinalResponse(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, Boolean flag, String msg) {
+    public void buildFinalResponse(RecommendRequestDTO recommendRequestDTO,
+                                   RecommendResponseDTO recommendResponseDTO, Boolean flag, String msg) {
         if(recommendResponseDTO == null) {
             recommendResponseDTO = RecommendResponseDTO.builder().build();
         }
@@ -308,13 +332,15 @@ public class RecommendServiceImpl implements RecommendService {
                     String id = e.getId();
 
                     int recommendCount = agentMaterialMapper.getRecommendCountById(id, recommendRequestDTO.getTableName2Recall());
-                    agentMaterialMapper.increaseRecommendCountById(id, recommendRequestDTO.getTableName2Recall(), recommendCount + 1);
+                    agentMaterialMapper.increaseRecommendCountById(id,
+                            recommendRequestDTO.getTableName2Recall(), recommendCount + 1);
                 }
         );
     }
 
     @Override
-    public RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall, String strategyId, String adId, int expectNumber, boolean traceLogSwitch) {
+    public RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall,
+                                                         String strategyId, String adId, int expectNumber, boolean traceLogSwitch) {
         return RecommendRequestDTO.builder()
                 .tableName2Recall(tableName2Recall)
                 .strategyId(strategyId)
@@ -322,6 +348,20 @@ public class RecommendServiceImpl implements RecommendService {
                 .expectNumber(expectNumber > 0 ? expectNumber : 1)
                 .traceLogSwitch(traceLogSwitch)
                 .build();
+    }
+
+    @Override
+    public RecommendResponseDTO fallBack4DoRecommend(RecommendRequestDTO recommendRequestDTO) {
+        System.out.println("服务器触发熔断");
+        return RecommendResponseDTO.builder()
+                .isThroughCache(Boolean.FALSE)
+                .msg("触发服务熔断,请稍后重试")
+                .code(-2)
+                .isBackstop(Boolean.FALSE)
+                .agentEntityList(Collections.EMPTY_LIST)
+                .sortedAgentEntityList(Collections.EMPTY_LIST)
+                .build();
+
     }
 
 

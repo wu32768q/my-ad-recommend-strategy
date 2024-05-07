@@ -16,7 +16,9 @@ public class CommonElementDecorator extends AbstractElementDecorator {
         super();
     }
 
-    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) throws InstantiationException, IllegalAccessException {
+    @Override
+    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO,
+                        ElementEntity elementEntity) throws InstantiationException, IllegalAccessException {
 
         abstractElement.process(recommendRequestDTO, recommendResponseDTO, elementEntity);
     }

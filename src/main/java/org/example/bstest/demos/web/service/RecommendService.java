@@ -37,4 +37,6 @@ public interface RecommendService {
 //    public RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall,String strategyId, String adId, int expectNumber);
 
     RecommendRequestDTO buildInitRecommendRequest(String tableName2Recall, String strategyId, String adId, int expectNumber, boolean traceLogSwitch);
+
+    RecommendResponseDTO fallBack4DoRecommend(RecommendRequestDTO recommendRequestDTO);
 }

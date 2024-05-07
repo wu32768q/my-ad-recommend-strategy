@@ -3,7 +3,8 @@ package org.example.bstest.demos.web.enums;
 import java.util.Objects;
 
 public enum ResponseStatusEnum {
-    SUCESS("200"),FAIL("-1");
+    SUCESS("200"),
+    FAIL("-1");
 
     final String code;
 

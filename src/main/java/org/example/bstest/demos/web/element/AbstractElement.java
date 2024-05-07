@@ -6,7 +6,8 @@ import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 
 public interface AbstractElement {
 
-    public  void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity);
+    public  void process(RecommendRequestDTO recommendRequestDTO,
+                         RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity);
 
 
 

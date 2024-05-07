@@ -19,12 +19,14 @@ public class ColumnRangeFilter extends  AbstractFilter {
     MongoTemplate mongoTemplate;
 
     @Override
-    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void process(RecommendRequestDTO recommendRequestDTO,
+                        RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         this.doFilter(recommendRequestDTO, recommendResponseDTO, elementEntity);
     }
 
     @Override
-    public void doFilter(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
+    public void doFilter(RecommendRequestDTO recommendRequestDTO,
+                         RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) {
         List<AgentEntity> list = recommendResponseDTO.getAgentEntityList();
 //        System.out.println(",,,," + elementEntity);
         list = list.stream().filter(e -> {
@@ -32,7 +34,8 @@ public class ColumnRangeFilter extends  AbstractFilter {
                 Field field = AgentEntity.class.getDeclaredField(elementEntity.getColumnName());
                 field.setAccessible(true);
 //                System.out.println("......" + field.get(e));
-                if (((int) field.get(e)) < elementEntity.getRightRule() && ((int) field.get(e)) > elementEntity.getLeftRule()) {
+                if (((int) field.get(e)) < elementEntity.getRightRule()
+                        && ((int) field.get(e)) > elementEntity.getLeftRule()) {
                     return true;
                 }
                 return false;

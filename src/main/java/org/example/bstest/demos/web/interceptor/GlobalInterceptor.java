@@ -9,7 +9,8 @@ import java.util.Enumeration;
 public class GlobalInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response, Object handler) throws Exception {
         //打印请求信息
         printMsg(request);
         // 校验登录状态

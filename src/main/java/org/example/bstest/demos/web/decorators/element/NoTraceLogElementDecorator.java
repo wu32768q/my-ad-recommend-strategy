@@ -7,7 +7,8 @@ import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 
 public class NoTraceLogElementDecorator extends AbstractElementDecorator {
     @Override
-    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) throws InstantiationException, IllegalAccessException {
+    public void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO,
+                        ElementEntity elementEntity) throws InstantiationException, IllegalAccessException {
 
     }
 }

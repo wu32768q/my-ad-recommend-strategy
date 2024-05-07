@@ -16,7 +16,9 @@ public abstract class AbstractElementDecorator {
 
     }
 
-    public abstract void process(RecommendRequestDTO recommendRequestDTO, RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity) throws InstantiationException, IllegalAccessException;
+    public abstract void process(RecommendRequestDTO recommendRequestDTO,
+                                 RecommendResponseDTO recommendResponseDTO, ElementEntity elementEntity)
+            throws InstantiationException, IllegalAccessException;
 
     public AbstractElementDecorator() {
         this.abstractElement = abstractElement;
