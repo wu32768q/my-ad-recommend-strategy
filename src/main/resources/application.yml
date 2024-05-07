@@ -8,12 +8,14 @@ server:
     threads:
       max: 150
       min-spare: 150
+    accept-count: 300
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml    # mapper映射文件位置
   type-aliases-package: org.example.bstest.demos.web.DTO   # 实体类所在的位置
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl   #用于控制台打印sql语句
+
 
 spring:
   application:
@@ -91,6 +93,8 @@ hystrix:
           thread:
             # 熔断超时设置，默认为1分钟
             timeoutInMilliseconds: 2000
+
 feign:
   circuitbreaker:
     enabled: true
+

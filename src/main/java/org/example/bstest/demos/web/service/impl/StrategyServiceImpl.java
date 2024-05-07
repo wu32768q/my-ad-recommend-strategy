@@ -5,6 +5,7 @@ import com.alibaba.druid.util.StringUtils;
 import org.bson.types.ObjectId;
 import org.example.bstest.demos.web.DTO.RouteResponseDTO;
 import org.example.bstest.demos.web.DTO.StrategyDTO;
+import org.example.bstest.demos.web.constants.MsgConstants;
 import org.example.bstest.demos.web.entity.StrategyEntity;
 import org.example.bstest.demos.web.enums.ElementTypeEnum;
 import org.example.bstest.demos.web.enums.ResponseStatusEnum;
@@ -115,7 +116,8 @@ public class StrategyServiceImpl implements StrategyService {
         try {
             objectId = new ObjectId(id);
         } catch (Exception e) {
-            return new RouteResponseDTO<ObjectId>(ResponseStatusEnum.FAIL, "失败原因：策略id from String 2 ObjectId 失败，请检查id合法性");
+            e.printStackTrace();
+            return new RouteResponseDTO<ObjectId>(ResponseStatusEnum.FAIL, MsgConstants.STRATEGY_ID_TRANSFOROM_FAILED);
         }
         return new RouteResponseDTO<ObjectId>(objectId, ResponseStatusEnum.SUCESS);
     }

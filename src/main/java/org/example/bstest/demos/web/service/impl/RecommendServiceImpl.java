@@ -71,8 +71,8 @@ public class RecommendServiceImpl implements RecommendService {
     @HystrixCommand(fallbackMethod = "fallBack4DoRecommend",
             threadPoolKey = "doRecommendMethodThreadPool",
             threadPoolProperties = {
-            @HystrixProperty(name="coreSize",value = "4"),// 核心线程数
-            @HystrixProperty(name="maxQueueSize",value="20") // 等待队列⻓度
+            @HystrixProperty(name="coreSize",value = "30"),// 核心线程数
+            @HystrixProperty(name="maxQueueSize",value="200") // 等待队列⻓度
     })
     @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "1000")
     public RecommendResponseDTO doRecommend(RecommendRequestDTO recommendRequestDTO) {
@@ -352,7 +352,7 @@ public class RecommendServiceImpl implements RecommendService {
 
     @Override
     public RecommendResponseDTO fallBack4DoRecommend(RecommendRequestDTO recommendRequestDTO) {
-        System.out.println("服务器触发熔断");
+//        System.out.println("服务器触发熔断");
         return RecommendResponseDTO.builder()
                 .isThroughCache(Boolean.FALSE)
                 .msg("触发服务熔断,请稍后重试")

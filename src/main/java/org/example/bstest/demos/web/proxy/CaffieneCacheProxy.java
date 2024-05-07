@@ -45,7 +45,7 @@ public class CaffieneCacheProxy {
                 //最大条数
                 .maximumSize(20)
                 //最后一次读或写操作后经过指定时间过期
-                .expireAfterAccess(2, TimeUnit.SECONDS)
+                .expireAfterAccess(5, TimeUnit.SECONDS)
                 //监听缓存被移除
 //            .removalListener((key, val, removalCause) -> { })
                 //记录命中
@@ -53,7 +53,7 @@ public class CaffieneCacheProxy {
                 .build();
 //            key -> recommendService.doRecommend(key)
 
-        rateLimiter = RateLimiter.create(100, Duration.ofSeconds(3));
+        rateLimiter = RateLimiter.create(1000);
 
 //        cache4Ad2Strategy = Caffeine.newBuilder()
 //                //初始数量
@@ -100,7 +100,7 @@ public class CaffieneCacheProxy {
                     .build();
 
         }
-        System.out.println("缓存未命中");
+//        System.out.println("缓存未命中");
         recommendResponseDTO = recommendService.doRecommend(recommendRequestDTO);
         cache4Agent.put(hashCode, recommendResponseDTO);
          return recommendResponseDTO;

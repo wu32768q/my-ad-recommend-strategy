@@ -31,6 +31,8 @@ public class MsgConstants {
 
     public static String BUILD_BY_CACHE = "经由缓存输出结果";
 
+    public static String  STRATEGY_ID_TRANSFOROM_FAILED = "失败原因：策略id from String 2 ObjectId 失败，请检查id合法性";
+
 
 
 }
