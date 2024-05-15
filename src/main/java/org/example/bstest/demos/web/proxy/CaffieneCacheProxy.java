@@ -102,7 +102,10 @@ public class CaffieneCacheProxy {
         }
 //        System.out.println("缓存未命中");
         recommendResponseDTO = recommendService.doRecommend(recommendRequestDTO);
-        cache4Agent.put(hashCode, recommendResponseDTO);
+//        二重校验
+        if(ObjectUtils.isEmpty(cache4Agent.getIfPresent(hashCode))) {
+            cache4Agent.put(hashCode, recommendResponseDTO);
+        }
          return recommendResponseDTO;
 
     }

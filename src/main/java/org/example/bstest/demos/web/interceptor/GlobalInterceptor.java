@@ -10,7 +10,8 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response, Object handler) throws Exception {
+                             HttpServletResponse response, Object handler)
+            throws Exception {
         //打印请求信息
         printMsg(request);
         // 校验登录状态
@@ -18,9 +19,10 @@ public class GlobalInterceptor implements HandlerInterceptor {
         if (!isLoggedIn) {
             // 如果未登录，重定向到登录页面或返回错误响应
             response.sendRedirect(request.getContextPath() + "/login");
-            return false; // 拦截器返回false，请求处理结束
+            return false;
         }
-        return true; // 继续处理请求
+        // 继续处理请求
+        return true;
     }
 
     private boolean checkLoginStatus(HttpServletRequest request) {

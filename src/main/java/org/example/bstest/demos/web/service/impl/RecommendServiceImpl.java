@@ -1,11 +1,10 @@
 package org.example.bstest.demos.web.service.impl;
 
 
-//import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-//import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.google.common.util.concurrent.RateLimiter;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+
 import org.example.bstest.demos.web.constants.DbConstants;
 import org.example.bstest.demos.web.constants.MsgConstants;
 import org.example.bstest.demos.web.DTO.RecommendRequestDTO;
@@ -16,6 +15,7 @@ import org.example.bstest.demos.web.decorators.element.CommonElementDecorator;
 import org.example.bstest.demos.web.element.AbstractElement;
 import org.example.bstest.demos.web.element.recall.WholeTableRecall;
 import org.example.bstest.demos.web.element.sort.RandomSort;
+
 import org.example.bstest.demos.web.entity.AgentEntity;
 import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
 import org.example.bstest.demos.web.entity.StrategyEntity;
@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.SocketUtils;
+
 import org.springframework.util.StringUtils;
 
 
@@ -218,8 +218,10 @@ public class RecommendServiceImpl implements RecommendService {
                 getCommonTimePrefix4Msg() + MsgConstants.BUILD_SUCCESS);
 
 //        变动response中agent的推荐次数
-        List<AgentEntity> agentList = recommendResponseDTO.getAgentEntityList();
-        updateRecommendCountByAgentList(agentList, recommendRequestDTO);
+//        List<AgentEntity> agentList = recommendResponseDTO.getAgentEntityList();
+//        updateRecommendCountByAgentList(agentList, recommendRequestDTO);
+
+
         recommendResponseDTO.setResponseStatusEnum(ResponseStatusEnum.SUCESS);
         recommendResponseDTO.setCode(200);
         if( ! recommendRequestDTO.isTraceLogSwitch()) {
