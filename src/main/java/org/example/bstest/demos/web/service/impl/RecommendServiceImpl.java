@@ -5,6 +5,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.google.common.util.concurrent.RateLimiter;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.example.bstest.demos.web.constants.DbConstants;
 import org.example.bstest.demos.web.constants.MsgConstants;
 import org.example.bstest.demos.web.DTO.RecommendRequestDTO;
@@ -125,7 +126,7 @@ public class RecommendServiceImpl implements RecommendService {
 
                 buildFinalResponse(recommendRequestDTO, recommendResponseDTO, true,
                         getCommonTimePrefix4Msg() + MsgConstants.BUILD_SUCCESS);
-                if( ! recommendRequestDTO.isTraceLogSwitch()) {
+                if(BooleanUtils.isFalse(recommendRequestDTO.isTraceLogSwitch())) {
                     recommendResponseDTO.setTraceLog(Collections.emptyList());
                 }
                 recommendResponseDTO.setIsBackstop(false);
@@ -190,10 +191,9 @@ public class RecommendServiceImpl implements RecommendService {
         if(isResEnough(recommendRequestDTO, recommendResponseDTO)) {
             this.limitAgentList(recommendRequestDTO, recommendResponseDTO);
             recommendResponseDTO.getTraceLog().add(getCommonTimePrefix4Msg() + MsgConstants.RES_NUMBER_LIMIT);
-
             buildFinalResponse(recommendRequestDTO, recommendResponseDTO, true,
                     getCommonTimePrefix4Msg() + MsgConstants.BUILD_SUCCESS);
-            if( ! recommendRequestDTO.isTraceLogSwitch()) {
+            if(BooleanUtils.isFalse(recommendRequestDTO.isTraceLogSwitch())) {
                 recommendResponseDTO.setTraceLog(Collections.emptyList());
             }
             recommendResponseDTO.setIsBackstop(false);
