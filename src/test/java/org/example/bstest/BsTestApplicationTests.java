@@ -1,16 +1,13 @@
 package org.example.bstest;
 
-import org.example.bstest.demos.web.constants.KafkaConstants;
-import org.example.bstest.demos.web.entity.elementEntity.ElementEntity;
-import org.example.bstest.demos.web.enums.ElementTypeEnum;
-import org.example.bstest.demos.web.mapper.mongodb.StrategyMapper;
-import org.example.bstest.demos.web.mapper.mysql.AgentMaterialMapper;
-import org.example.bstest.demos.web.proxy.KafkaProducerProxy;
+import org.example.bstest.demos.bishe.constants.KafkaConstants;
+import org.example.bstest.demos.bishe.mapper.mongodb.StrategyMapper;
+import org.example.bstest.demos.bishe.mapper.mysql.AgentMaterialMapper;
+import org.example.bstest.demos.bishe.proxy.KafkaProducerProxy;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import sun.management.Agent;
 
 import javax.annotation.Resource;
 

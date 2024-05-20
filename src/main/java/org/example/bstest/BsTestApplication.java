@@ -6,11 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
-import org.springframework.context.annotation.ComponentScans;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
-@MapperScan("org.example.bstest.demos.web.mapper.mysql")
+@MapperScan("org.example.bstest.demos.bishe.mapper.mysql")
 @EnableAsync
 @EnableHystrix
 @EnableCaching

@@ -1,10 +1,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.example.bstest.demos.web.mapper.mysql.AgentMaterialMapper">
+<mapper namespace="org.example.bstest.demos.bishe.mapper.mysql.AgentMaterialMapper">
 
     <!-- 定义resultMap，用于自定义字段和列的映射关系 -->
-    <resultMap id="agentResultMap" type="org.example.bstest.demos.web.entity.AgentEntity">
+    <resultMap id="agentResultMap" type="org.example.bstest.demos.bishe.entity.AgentEntity">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="age" column="age"/>
