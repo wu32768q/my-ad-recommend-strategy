@@ -142,12 +142,12 @@ hystrix:
         # 熔断后休眠时⻓，默认值5秒
         sleepWindowInMilliseconds: 3000
         # 熔断触发最⼩请求次数，默认值是20
-        requestVolumeThreshold: 5
+        requestVolumeThreshold: 10
       execution:
         isolation:
           thread:
             # 熔断超时设置，默认为1分钟
-            timeoutInMilliseconds: 2000
+            timeoutInMilliseconds: 5000
 
 feign:
   circuitbreaker:
