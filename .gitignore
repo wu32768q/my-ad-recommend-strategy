@@ -31,3 +31,24 @@ build/
 
 ### VS Code ###
 .vscode/
+
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+
+.log
+
+
+
+### generated files ###
+bin/
+gen/
+
+### MAC ###
+.DS_Store
+
+### Other ###
+logs/
+log
+temp/
